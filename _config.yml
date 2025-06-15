@@ -1,0 +1,28 @@
+# ─── サイト基本情報 ───
+title: "古郷 優平 (Yuhei Kogo)"
+description: "北海道大学大学院 理学院 数学専攻博士後期課程"
+keywords: "古郷優平,古郷,優平, Yuhei Kogo,Kogo, Yuhei, 北海道大学, 北海道, 数学, テータ関数, 可積分系"
+
+# ─── 多言語対応／著者情報 ───
+author:
+  name:      "古郷優平"
+  en_name:   "Yuhei Kogo"
+  given_name: "Yuhei"
+  family_name:  "Kogo"
+  job_title: "Doctoral Student, Department of Mathematics, Graduate School of Science, Hokkaido University"
+  affiliation: "Hokkaido University"
+  # same_as:
+
+# ─── サイト URL／ベースパス ───
+url:       "https://YuheiKogo.github.io"
+baseurl:   ""
+
+# ─── SNS／認証キーなどのオプション変数 ───
+# twitter:     "@RNakano_theta"
+# google_verify: "VVk4Bfte-4_pc0W8nFpDTIgeCtWQ4b46DuX_qHtKYQE"
+
+# ─── プラグイン設定など ───
+theme:      minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
