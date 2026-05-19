@@ -1,72 +1,67 @@
----
-layout: default
-title: "デフォルト"
-lang: ja
----
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ page.lang | default: 'ja' }}">
 <head>
-	{% include head.html %}
-	<link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <meta name="author" content="{{ site.author.en_name }}">
+  <meta property="og:title" content="{% if page.og_title %}{{ page.og_title }}{% elsif page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{{ page.og_description | default: page.description | default: site.description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ page.url | relative_url }}">
+  <link rel="icon" href="{{ '/assets/img/favicon.png' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+
+  {% if site.google_analytics %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "{{ site.google_analytics }}");
+  </script>
+  {% endif %}
 </head>
 <body>
-	
-	<!-- 言語切り替えセレクタ -->
-	<div class="lang-switch">
-		<label for="lang-select">Language:</label>
-		<select id="lang-select" onchange="setLanguage(this.value)">
-			<option value="ja">日本語</option>
-			<option value="en">English</option>
-		</select>
-	</div>
-	<!-- ナビゲーションを include -->
-	<div id="sidebar-container">
-		{% include sidebar.html %}
-	</div>
-	<!-- ハンバーガーボタン -->
-	<button class="menu-btn" onclick="toggleMenu(this)" aria-label="Toggle menu">☰</button>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-	<!-- メインコンテンツ -->
-	<main>
-		{{ content }}
-	</main>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="Home">
+        <span class="brand-ja">古郷 優平</span>
+        <span class="brand-en">Yuhei Kogo</span>
+      </a>
 
-	<!-- 共通JS -->
-	<script src="{{ '/assets/lang-switch.js' | relative_url }}"></script>
-	<script src="{{ '/assets/menu.js'				| relative_url }}" defer></script>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
 
-	<footer class="site-footer" style="text-align:center; padding:2em 1em; font-size:0.9em; color:var(--text-color);">
-	<p class="lang-ja">
-		最終更新: <span id="last-updated-ja">-</span>
-	</p>
-	<p class="lang-en">
-		Last updated: <span id="last-updated-en">-</span>
-	</p>
-	</footer>
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+        <a href="{{ '/' | relative_url }}"><span class="lang-ja">ホーム</span><span class="lang-en">Home</span></a>
+        <a href="{{ '/research-activity.html' | relative_url }}"><span class="lang-ja">研究活動</span><span class="lang-en">Research</span></a>
+        <a href="{{ '/circum-vitae.html' | relative_url }}"><span class="lang-ja">履歴</span><span class="lang-en">CV</span></a>
+        <a href="{{ '/slides.html' | relative_url }}"><span class="lang-ja">講演資料</span><span class="lang-en">Slides</span></a>
+        <div class="lang-control" role="group" aria-label="Language selector">
+          <button type="button" data-set-lang="ja">JP</button>
+          <button type="button" data-set-lang="en">EN</button>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-	<script>
-		// 最終更新日時を取得
-		const d = new Date(document.lastModified);
+  <main id="main" class="page-shell">
+    {{ content }}
+  </main>
 
-		// 2桁ゼロ埋めヘルパー
-		const z2 = n => String(n).padStart(2, '0');
+  <footer class="site-footer">
+    <p>
+      <span class="lang-ja">最終更新：{{ page.updated | default: "2026-05-19" }}</span>
+      <span class="lang-en">Last updated: {{ page.updated | default: "May 19, 2026" }}</span>
+    </p>
+    <p>&copy; {{ "now" | date: "%Y" }} Yuhei Kogo</p>
+  </footer>
 
-		// 各パーツを取得
-		const yyyy = d.getFullYear();          // 4桁の西暦
-		const mm   = z2(d.getMonth() + 1);     // 月
-		const dd   = z2(d.getDate());          // 日
-		const hh   = z2(d.getHours());         // 時
-		const mi   = z2(d.getMinutes());       // 分
-
-		// フォーマット（yyyy/mm/dd/hh/mi）
-		const formatted = `${yyyy}/${mm}/${dd} ${hh}:${mi}`;
-
-		// 挿入
-		document.getElementById('last-updated-ja').textContent = formatted;
-		document.getElementById('last-updated-en').textContent = formatted;
-	</script>
-
-
+  <script src="{{ '/assets/site.js' | relative_url }}"></script>
 </body>
 </html>
